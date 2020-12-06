@@ -29,7 +29,19 @@ class AppFixtures extends Fixture
             'admin01'
         ));
 
+        $userRand = new User();
+        $userRand->setUsername('Randal');
+        $userRand->setName('Rand');
+        $userRand->setLastname('R');
+        $userRand->setBirthday(new \DateTime('1999-09-15'));
+        $userRand->setRoles(['ROLE_USER']);
+        $userRand->setPassword($this->passwordEncoder->encodePassword(
+            $userRand,
+            'rand01'
+        ));
+
         $manager->persist($user);
+        $manager->persist($userRand);
         $manager->flush();
     }
 }
