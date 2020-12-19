@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -55,6 +57,16 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $admin;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserBankAccount::class, mappedBy="person")
+     */
+    private $bankaccount;
+
+    public function __construct()
+    {
+        $this->bankaccount = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -179,5 +191,35 @@ class User implements UserInterface
 
     public function __toString(){
         return $this->username;
+    }
+
+    /**
+     * @return Collection|UserBankAccount[]
+     */
+    public function getBankaccount(): Collection
+    {
+        return $this->bankaccount;
+    }
+
+    public function addBankaccount(UserBankAccount $bankaccount): self
+    {
+        if (!$this->bankaccount->contains($bankaccount)) {
+            $this->bankaccount[] = $bankaccount;
+            $bankaccount->setPerson($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBankaccount(UserBankAccount $bankaccount): self
+    {
+        if ($this->bankaccount->removeElement($bankaccount)) {
+            // set the owning side to null (unless already changed)
+            if ($bankaccount->getPerson() === $this) {
+                $bankaccount->setPerson(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -1,7 +1,13 @@
 {% block body %}
 <div>
-<h1>Bonjour {{ app.user.username }}</h1>
+<h1>Bonjour {{ app.user.name }} {{ app.user.lastname }}</h1>
+<a href="{{ path('logout') }}">Me déconnecter</a>
 </div>
-    <a href="{{ path('user_index') }}">List Users</a>
-    <a href="{{ path('bank_account_index') }}">Compte bancaires</a>
+    {% if is_granted('ROLE_ADMIN') %}
+      <a href="{{ path('user_index') }}">List Users</a>
+      <a href="{{ path('user_new') }}">Create Users</a>
+      <a href="{{ path('bank_account_index') }}">Compte bancaires</a>
+    {% endif %}
+    <div>
+    </div>
 {% endblock %}
