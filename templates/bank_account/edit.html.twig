@@ -3,11 +3,11 @@
 {% block title %}Edit BankAccount{% endblock %}
 
 {% block body %}
-    <h1>Edit BankAccount</h1>
+    <h1>Modifier BankAccount</h1>
 
     {{ include('bank_account/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('bank_account_index') }}">back to list</a>
+    <a href="{{ path('bank_account_index') }}">Retour à la liste</a>
 
     {{ include('bank_account/_delete_form.html.twig') }}
 {% endblock %}

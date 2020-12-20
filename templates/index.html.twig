@@ -1,6 +1,7 @@
+{% extends 'base.html.twig' %}
 {% block body %}
 <div>
-<h1>Bonjour {{ app.user.name }} {{ app.user.lastname }}</h1>
+<h1 class="text-center">Bonjour {{ app.user.name }} {{ app.user.lastname }}</h1>
 <a href="{{ path('logout') }}">Me déconnecter</a>
 </div>
     {% if is_granted('ROLE_ADMIN') %}
